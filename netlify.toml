@@ -19,3 +19,7 @@
   #  publish = "dist" # Folder with the static content for _redirect file
 
   ## more info on configuring this file: https://ntl.fyi/file-based-build-config
+
+  [build.environment]
+    # Закрепляем версию Bun, которой собран и проверен проект локально.
+    BUN_VERSION = "1.4.4"
