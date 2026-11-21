@@ -132,6 +132,8 @@ bun run preview    # локальный просмотр собранного п
 bun run test       # тесты Vitest (когда подключены)
 ```
 
+Каркас создан командой `bunx nuxi@latest init .` (шаблон minimal, менеджер Bun) с модулями `@nuxt/eslint`, `@nuxtjs/i18n`, `@nuxtjs/seo` и `@netlify/nuxt`. Для запуска в эмуляции Netlify (`netlify dev`) на linux/arm64 нужен Deno 2.4.2: `bun install -g --trust deno@2.4.2`. Повторить создание можно одной командой `bun create nuxt@latest . --template=minimal --packageManager=bun --no-gitInit --modules=@nuxt/eslint,@nuxtjs/i18n,@nuxtjs/seo,@netlify/nuxt --force`.
+
 Команды с `npm run ...` работают так же, если вы не используете Bun.
 
 > **`bun test` и `bun run test` — разные команды.** Первая запускает встроенный тест-раннер Bun и игнорирует конфигурацию Vitest. Нужна вторая: она запускает скрипт `test` из `package.json`.
