@@ -7,6 +7,24 @@ export default defineNuxtConfig({
   // собирался под локальную arm64, а Netlify Functions работает на x64. Поэтому
   // AI-ready отключены.
   aiReady: false,
+  i18n: {
+    // Язык по умолчанию — немецкий. Для стратегии `prefix_except_default`
+    // (используется по умолчанию) он обязателен, иначе nuxt-i18n пишет
+    // предупреждение в лог.
+    defaultLocale: "de",
+    // Файлы переводов лежат в `locales/` в корне проекта, а не в каталоге
+    // модуля `i18n/`, поэтому корнем структуры i18n считается сам проект.
+    // TODO: переместить файлы переводов в каталог модуля i18n, чтобы не было лишнего уровня вложенности.
+    restructureDir: ".",
+    langDir: "locales",
+    // Список языков сайта. `file` — имя файла переводов внутри `locales/`,
+    // `language` — ISO-код для атрибута lang и hreflang.
+    locales: [
+      { code: "de", language: "de-DE", name: "Deutsch", file: "de.json" },
+      { code: "en", language: "en-US", name: "English", file: "en.json" },
+      { code: "ru", language: "ru-RU", name: "Русский", file: "ru.json" },
+    ],
+  },
   site: {
     // Обязательно: публичный продакшн-домен (нужен для canonical-ссылок, sitemap и OG-картинок)
     url: "https://taskdigest.netlify.app/",
