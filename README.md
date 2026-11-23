@@ -108,6 +108,7 @@
 
 - Node.js (актуальная LTS-версия), Bun и Git.
 - Аккаунт Netlify и репозиторий на GitHub (или другом поддерживаемом Netlify хостинге Git).
+- Netlify CLI (`bun install -g netlify-cli`) — локальная проверка в эмуляции хостинга (`netlify build`, `netlify dev`).
 - Проект в Google Cloud Console с OAuth-клиентом типа «Веб-приложение».
 - Telegram-бот, созданный через [@BotFather](https://t.me/BotFather) (для функций бота).
 
@@ -129,7 +130,7 @@ bun install        # установка зависимостей
 bun run dev        # dev-сервер Nuxt (обычно http://localhost:3000)
 bun run build      # production-сборка
 bun run preview    # локальный просмотр собранного приложения
-bun run test       # тесты Vitest (когда подключены)
+bun run test       # тесты Vitest (watch-режим)
 ```
 
 Каркас создан командой `bunx nuxi@latest init .` (шаблон minimal, менеджер Bun) с модулями `@nuxt/eslint`, `@nuxtjs/i18n`, `@nuxtjs/seo` и `@netlify/nuxt`. Для запуска в эмуляции Netlify (`netlify dev`) на linux/arm64 нужен Deno 2.4.2: `bun install -g --trust deno@2.4.2`. Повторить создание можно одной командой `bun create nuxt@latest . --template=minimal --packageManager=bun --no-gitInit --modules=@nuxt/eslint,@nuxtjs/i18n,@nuxtjs/seo,@netlify/nuxt --force`.
@@ -305,11 +306,32 @@ curl "https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook" \
 - Компоненты с логикой проверяются через `@vue/test-utils`, селекторы строятся по БЭМ-классам; для интерактивных компонентов проверяются и ARIA-атрибуты.
 
 ```bash
-bun run test           # watch-режим
-bun run test --run     # разовый прогон (перед коммитом, в CI)
+bun run test                           # watch-режим: перезапуск затронутых тестов
+bun run test --run                     # разовый прогон (перед коммитом, в CI)
+bun run test --run utils               # только файлы, чей путь содержит utils
+bun run test --run -t "имя теста"      # только тесты с подходящим именем
+bun run test --run --reporter=verbose  # подробный вывод по каждому тесту
 ```
 
-Vitest и вспомогательные пакеты подключаются владельцем проекта; до этого момента тесты можно писать, но запустить их не получится.
+- `bun run test` запускает скрипт `test` из `package.json`; это не `bun test` (встроенный раннер Bun не читает конфигурацию Vitest).
+- Тесты идут в Nuxt-окружении `@nuxt/test-utils` с DOM на happy-dom (см. `vitest.config.ts`). Чистой функции Nuxt не нужен: добавьте в начало файла `// @vitest-environment node`.
+- Пока в проекте нет ни одного `*.spec.ts`, `vitest` завершается ошибкой «No test files found»; пустой прогон без ошибки — `bun run test --run --passWithNoTests`.
+
+### Проверка в окружении Netlify
+
+Приложение работает на serverless-функциях Netlify, поэтому зелёные тесты и `bun run dev` не гарантируют, что на хостинге соберётся и заработает то же самое. Перед пушем проверяйте проект через Netlify CLI (проект слинкован, `siteId` хранится в `.netlify/state.json`):
+
+```bash
+netlify status   # аккаунт авторизован, проект слинкован
+netlify build    # сборка по netlify.toml: bun run build, BUN_VERSION, упаковка функций
+netlify dev      # приложение через прокси Netlify: функции, редиректы, переменные окружения
+```
+
+- `netlify build` выполняет ту же команду сборки, что и на хостинге, и упаковывает serverless-функции в `.netlify/functions-internal`. Так ловятся проблемы, которых нет в `bun run build`: несовместимые нативные зависимости, неверный `publish`, ошибки упаковки функций.
+- `netlify dev` поднимает приложение на `http://localhost:8888`: страницы и `/api/v1/...` отдаются с одного origin, как на Netlify, а переменные окружения берутся из настроек сайта (контекст по умолчанию — `dev`). Здесь проверяются вход, запросы к API и редиректы. CLI сам запускает `nuxt dev` на порту 3000, поэтому перед проверкой этот порт должен быть свободен.
+- Полный прогон перед пушем: `bun run test --run && netlify build`.
+
+Ограничение: эмуляция выполняется на вашей машине и не воспроизводит архитектуру и лимиты Netlify Functions (x64, таймауты). Такие различия видны только на deploy preview после пуша.
 
 ## Документация в коде
 
