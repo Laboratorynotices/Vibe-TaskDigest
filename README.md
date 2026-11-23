@@ -414,6 +414,8 @@ netlify dev      # приложение через прокси Netlify: фун�
 
 Имя задания — `ID-short-task-name.md` (например, `0008-add-user-authentication.md`). Исходные требования в файле не меняются, отчёты, вопросы и ответы дописываются в конец, поэтому файл остаётся единственным источником истины о задании.
 
+Новое задание удобно создать через Skill [`sdd-new-task`](.agents/skills/sdd-new-task/SKILL.md): он сам находит следующий свободный номер по всем статусным каталогам и создаёт пустой файл в `docs/tasks/backlog/`.
+
 Подробнее — [`docs/tasks/README.md`](docs/tasks/README.md) и Skill [`.agents/skills/sdd-task-manager/SKILL.md`](.agents/skills/sdd-task-manager/SKILL.md).
 
 ## Работа с AI-агентами
