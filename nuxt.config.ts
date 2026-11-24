@@ -1,3 +1,15 @@
+/**
+ * Публичный абсолютный адрес приложения (например, https://taskdigest.netlify.app/).
+ *
+ * Берётся из переменной окружения `NUXT_PUBLIC_APP_URL`, которую задаёт
+ * владелец проекта (в Netlify или локально через Netlify/Nuxt CLI). Одно и то же
+ * значение используется для canonical-ссылок, sitemap и OG-картинок, а также
+ * доступно клиенту через `runtimeConfig.public.appUrl`. Если переменная не
+ * задана на этапе сборки, адрес будет `undefined` и SEO-разметка не получит
+ * базового URL.
+ */
+const appUrl = process.env.NUXT_PUBLIC_APP_URL;
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ["@nuxt/eslint", "@nuxtjs/i18n", "@nuxtjs/seo", "@netlify/nuxt"],
@@ -25,9 +37,18 @@ export default defineNuxtConfig({
       { code: "ru", language: "ru-RU", name: "Русский", file: "ru.json" },
     ],
   },
+  // Публичная конфигурация, доступная клиенту. Значение `appUrl`
+  // переопределяется переменной окружения `NUXT_PUBLIC_APP_URL`.
+  runtimeConfig: {
+    public: {
+      /** Абсолютный адрес приложения без завершающей обработки: см. `appUrl`. */
+      appUrl,
+    },
+  },
   site: {
-    // Обязательно: публичный продакшн-домен (нужен для canonical-ссылок, sitemap и OG-картинок)
-    url: "https://taskdigest.netlify.app/",
+    // Обязательно: публичный продакшн-домен (нужен для canonical-ссылок, sitemap и OG-картинок).
+    // Берётся из `NUXT_PUBLIC_APP_URL`, а не из строки в коде.
+    url: appUrl,
     // Название сайта (используется в шаблонах заголовков и Schema.org)
     name: "TaskDigest",
     // Описание по умолчанию
