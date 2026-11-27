@@ -14,6 +14,8 @@ const appUrl = process.env.NUXT_PUBLIC_APP_URL;
 export default defineNuxtConfig({
   modules: ["@nuxt/eslint", "@nuxtjs/i18n", "@nuxtjs/seo", "@netlify/nuxt"],
   compatibilityDate: "2025-07-15",
+  // Единая точка входа стилей: только @import, см. assets/styles/style.css.
+  css: ["~~/assets/styles/style.css"],
   // AI-ready функции @nuxtjs/seo подключают нативную зависимость mdream. При
   // сборке на Netlify она падала с ошибкой "Cannot find native binding": биндинг
   // собирался под локальную arm64, а Netlify Functions работает на x64. Поэтому

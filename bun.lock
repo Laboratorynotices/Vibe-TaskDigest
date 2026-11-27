@@ -5,6 +5,7 @@
     "": {
       "name": "Vibe-TaskDigest",
       "dependencies": {
+        "@netlify/identity": "^2.0.1",
         "@netlify/nuxt": "1.0.1",
         "@nuxt/eslint": "1.17.0",
         "@nuxtjs/i18n": "10.6.0",
@@ -406,6 +407,8 @@
     "@netlify/headers": ["@netlify/headers@3.0.6", "", { "dependencies": { "@netlify/headers-parser": "^10.1.1" } }, "sha512-KP8AkI5rFoZTOoxPC/IBZFTpn1zY3rSG/t5HF8Gi0l5w89+SpgGN2Ysb9OGxxWaYzRjSuCQp+V8f6KfSuj4fow=="],
 
     "@netlify/headers-parser": ["@netlify/headers-parser@10.1.1", "", { "dependencies": { "escape-string-regexp": "^5.0.0", "smol-toml": "^1.5.2" } }, "sha512-ooiSc/eN/ktuugZmY4GVPh6nBYz2um0zpemokDvTLLQPF12QyXil8N6fr82wdLi03WNowwiL98eultZkTyHlyw=="],
+
+    "@netlify/identity": ["@netlify/identity@2.0.1", "", { "dependencies": { "gotrue-js": "^1.0.1" } }, "sha512-tKOJddHz1GHGbNsKSMaPjmtBiAJ76vU/CBmfZfiliO0SUtWbsJ7pdiXeki/73qyTR708r/NGsC0DnvUO1ebQtA=="],
 
     "@netlify/images": ["@netlify/images@2.0.7", "", { "dependencies": { "ipx": "^4.0.0" } }, "sha512-QmBZ4qIJm+DRlG23Wa0ogJ5nP9MASJd8hInTRBK7qLk9xFtGhwNHj1w9QIWL4PQSAr3oJq0+5myzQ7QmBGVT1w=="],
 
@@ -1384,6 +1387,8 @@
     "gonzales-pe": ["gonzales-pe@4.3.0", "", { "dependencies": { "minimist": "^1.2.5" }, "bin": { "gonzales": "bin/gonzales.js" } }, "sha512-otgSPpUmdWJ43VXyiNgEYE4luzHCL2pz4wQ0OnDluC6Eg4Ko3Vexy/SrSynglw/eR+OhkzmqFCZa/OFa/RgAOQ=="],
 
     "gopd": ["gopd@1.2.0", "", {}, "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg=="],
+
+    "gotrue-js": ["gotrue-js@1.0.1", "", {}, "sha512-ZynwwM4bEo2y5yNWO3/Ynbx1AvQz9ONJSM9tB1jpooAvDPevGdvgeFP3NwM59FAlkd0szSkQRAhjINMkJSDfAQ=="],
 
     "graceful-fs": ["graceful-fs@4.2.12", "", {}, "sha512-iuyGF2E4oafQfPsRrG2wtY2ILupMhvtdrhzrxB+0VcjsPpSPttpfYdjnGFGsTi5MaJFjI1jOKHPQ6UTbTj9TAw=="],
 

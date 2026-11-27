@@ -1,0 +1,3 @@
+/* Единая точка входа стилей: только @import, подключена в nuxt.config.ts. */
+
+@import "./components/auth-panel.css";

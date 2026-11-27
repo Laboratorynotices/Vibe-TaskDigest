@@ -11,6 +11,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@netlify/identity": "^2.0.1",
     "@netlify/nuxt": "1.0.1",
     "@nuxt/eslint": "1.17.0",
     "@nuxtjs/i18n": "10.6.0",
